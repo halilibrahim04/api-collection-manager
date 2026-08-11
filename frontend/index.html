@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      window.onerror = function(message, source, lineno, colno, error) {
+        document.body.innerHTML = '<div style="color:red; font-size:16px; font-weight:bold; padding:20px; z-index:9999; position:absolute; top:0; left:0; width:100%; height:100%; background:black;">' + 
+          'RUNTIME ERROR:<br/><br/>' + message + '<br/><br/>' + (error ? error.stack : '') + '</div>';
+      };
+      window.addEventListener("unhandledrejection", function(promiseRejectionEvent) { 
+        document.body.innerHTML = '<div style="color:red; font-size:16px; font-weight:bold; padding:20px; z-index:9999; position:absolute; top:0; left:0; width:100%; height:100%; background:black;">' + 
+          'UNHANDLED PROMISE:<br/><br/>' + promiseRejectionEvent.reason + '</div>';
+      });
+    </script>
     <meta
       name="description"
       content="API Collection Manager - Postman ve Bruno collection'larınızı yönetin ve çalıştırın"

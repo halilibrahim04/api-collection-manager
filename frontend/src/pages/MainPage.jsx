@@ -12,6 +12,7 @@ export default function MainPage() {
   const [response, setResponse] = useState(null)
   const [sending, setSending] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [activeEnvironment, setActiveEnvironment] = useState({})
 
   const [lastRequestMethod, setLastRequestMethod] = useState(null)
 
@@ -52,6 +53,7 @@ export default function MainPage() {
       const interpolate = (str) => {
         if (!str || typeof str !== 'string') return str;
         return str.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
+          if (activeEnvironment && activeEnvironment[key] !== undefined) return activeEnvironment[key]
           return pm.environment.get(key) || pm.variables.get(key) || match;
         })
       }
@@ -243,7 +245,7 @@ export default function MainPage() {
       />
       <div className="main-content">
         <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '8px 16px', borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--bg-secondary)' }}>
-           <EnvironmentManager onEnvironmentChange={setEnvironment} />
+           <EnvironmentManager onEnvironmentChange={setActiveEnvironment} />
         </div>
         <div className="request-section">
           <RequestPanel

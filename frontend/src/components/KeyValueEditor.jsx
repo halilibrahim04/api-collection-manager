@@ -1,11 +1,15 @@
 import { FiPlus, FiTrash2 } from 'react-icons/fi'
 import './KeyValueEditor.css'
 
-export default function KeyValueEditor({ pairs, onChange, keyPlaceholder = 'Key', valuePlaceholder = 'Value', allowFile = false }) {
+export default function KeyValueEditor({ pairs, onChange, items, setItems, keyPlaceholder = 'Key', valuePlaceholder = 'Value', allowFile = false }) {
+  // Gracefully support both API signatures to prevent any regressions
+  const data = pairs || items || []
+  const dataSetter = onChange || setItems
+
   const handleChange = (index, field, value) => {
-    const updated = [...pairs]
+    const updated = [...data]
     updated[index] = { ...updated[index], [field]: value }
-    onChange(updated)
+    if (dataSetter) dataSetter(updated)
   }
 
   const handleFileChange = (index, file) => {
@@ -13,31 +17,31 @@ export default function KeyValueEditor({ pairs, onChange, keyPlaceholder = 'Key'
     const reader = new FileReader();
     reader.onload = (e) => {
       const base64 = e.target.result.split(',')[1];
-      const updated = [...pairs]
+      const updated = [...data]
       updated[index] = { ...updated[index], value: base64, filename: file.name, _type: 'file' }
-      onChange(updated)
+      if (dataSetter) dataSetter(updated)
     };
     reader.readAsDataURL(file);
   }
 
   const toggleType = (index) => {
-    const updated = [...pairs]
+    const updated = [...data]
     updated[index] = { ...updated[index], _type: updated[index]._type === 'file' ? 'text' : 'file', value: '', filename: '' }
-    onChange(updated)
+    if (dataSetter) dataSetter(updated)
   }
 
   const addPair = () => {
-    onChange([...pairs, { key: '', value: '', enabled: true, _type: 'text' }])
+    if (dataSetter) dataSetter([...data, { key: '', value: '', enabled: true, _type: 'text' }])
   }
 
   const removePair = (index) => {
-    onChange(pairs.filter((_, i) => i !== index))
+    if (dataSetter) dataSetter(data.filter((_, i) => i !== index))
   }
 
   const toggleEnabled = (index) => {
-    const updated = [...pairs]
+    const updated = [...data]
     updated[index] = { ...updated[index], enabled: !updated[index].enabled }
-    onChange(updated)
+    if (dataSetter) dataSetter(updated)
   }
 
   return (
@@ -50,7 +54,7 @@ export default function KeyValueEditor({ pairs, onChange, keyPlaceholder = 'Key'
         <div className="kv-cell kv-value">{valuePlaceholder}</div>
         <div className="kv-cell kv-actions"></div>
       </div>
-      {pairs.map((pair, i) => (
+      {data.map((pair, i) => (
         <div key={i} className={`kv-row ${!pair.enabled ? 'disabled' : ''}`}>
           <div className="kv-cell kv-check">
             <input
