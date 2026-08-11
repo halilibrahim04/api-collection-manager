@@ -1,8 +1,19 @@
 import { useState, useEffect } from 'react'
+import { FiDownload } from 'react-icons/fi'
 import './ResponsePanel.css'
+import JsonViewer from './JsonViewer'
 
 export default function ResponsePanel({ response, loading, requestMethod }) {
   const [activeTab, setActiveTab] = useState('body')
+
+  let parsedJsonData = null
+  if (response && response.body) {
+    if (typeof response.body === 'string') {
+      try { parsedJsonData = JSON.parse(response.body) } catch {}
+    } else {
+      parsedJsonData = response.body
+    }
+  }
 
   // Tablo verisi her render'da (üstte) hesaplanıyor
   let tableData = null
@@ -121,6 +132,37 @@ export default function ResponsePanel({ response, loading, requestMethod }) {
   const bodyStr = formatBody()
   const bodySize = new Blob([bodyStr]).size
 
+  const downloadResponse = () => {
+    if (!response || !response.body) return;
+    try {
+      let content = typeof response.body === 'string' ? response.body : JSON.stringify(response.body, null, 2);
+      let ext = 'txt';
+      let mimeType = 'text/plain';
+      
+      const ctHeader = Object.keys(responseHeaders).find(k => k.toLowerCase() === 'content-type');
+      if (ctHeader && responseHeaders[ctHeader]) {
+         const ct = responseHeaders[ctHeader].toLowerCase();
+         if (ct.includes('json')) { ext = 'json'; mimeType = 'application/json'; }
+         else if (ct.includes('html')) { ext = 'html'; mimeType = 'text/html'; }
+         else if (ct.includes('xml')) { ext = 'xml'; mimeType = 'application/xml'; }
+      } else if (parsedJsonData !== null) {
+         ext = 'json'; mimeType = 'application/json';
+      }
+
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `response_${Date.now()}.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error('Download failed', e);
+    }
+  }
+
   return (
     <div className="response-panel">
       {/* ── Status Bar ── */}
@@ -159,15 +201,31 @@ export default function ResponsePanel({ response, loading, requestMethod }) {
               <span className="tab-count">{Object.keys(responseHeaders).length}</span>
             )}
           </button>
+          
+          <button 
+            className="response-tab"
+            style={{ marginLeft: 'auto', borderLeft: '1px solid var(--border-color)', color: 'var(--primary)', display: 'flex', alignItems: 'center' }}
+            onClick={downloadResponse}
+            title="Download Response Body"
+          >
+            <FiDownload size={14} style={{ marginRight: '6px' }} />
+            Save Response
+          </button>
         </div>
       </div>
 
       {/* ── Tab Content ── */}
       <div className="response-content">
         {activeTab === 'body' && (
-          <pre className="response-body">
-            <code>{bodyStr || 'No response body'}</code>
-          </pre>
+          <div className="response-body" style={{ padding: '16px', overflow: 'auto', backgroundColor: '#fff' }}>
+            {parsedJsonData !== null ? (
+              <JsonViewer data={parsedJsonData} />
+            ) : (
+              <pre className="body-pre">
+                <code>{bodyStr || 'No response body'}</code>
+              </pre>
+            )}
+          </div>
         )}
 
         {activeTab === 'table' && tableData && (

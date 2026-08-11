@@ -1,0 +1,82 @@
+.jv-node {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.jv-line {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.jv-toggleable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.jv-toggleable:hover {
+  background-color: var(--bg-hover);
+  border-radius: 4px;
+}
+
+.jv-arrow {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  font-size: 8px;
+  color: var(--text-tertiary);
+  margin-right: 4px;
+  transition: transform 0.15s ease;
+  position: absolute;
+  left: -20px;
+}
+
+.jv-arrow-right {
+  transform: rotate(-90deg);
+}
+
+.jv-arrow-down {
+  transform: rotate(0deg);
+}
+
+.jv-key {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.jv-punctuation {
+  color: var(--text-secondary);
+}
+
+.jv-string {
+  color: #22863a;
+}
+
+.jv-number {
+  color: #005cc5;
+}
+
+.jv-boolean {
+  color: #e36209;
+}
+
+.jv-null {
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.jv-collapsed-text {
+  color: var(--text-tertiary);
+  font-style: italic;
+  font-size: 11px;
+  padding: 0 4px;
+  background: var(--border-color);
+  border-radius: 4px;
+  margin: 0 4px;
+}
