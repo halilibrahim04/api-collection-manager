@@ -1,61 +1,88 @@
 # API Collection Manager
 
-Postman ve Bruno Collection dosyalarını import ederek API'leri web arayüzü üzerinden yönetip çalıştırmanızı sağlayan bir uygulama.
+An advanced, self-hosted API workspace and collection management tool that enables developers to import, manage, and execute API endpoints through a seamless web interface.
 
-## Teknolojiler
+## Platform Features
 
-| Katman | Teknoloji |
-|---|---|
-| Backend | Flask (Python) |
-| Frontend | React (Vite) |
-| Veritabanı | SQLite (PostgreSQL'e geçiş yapılabilir) |
-| Authentication | JWT |
+- **Collection Hub:** Drag and drop support for popular API collection schemas (Bruno/Legacy templates).
+- **Environment Contexts:** Define global and local environment variables for dynamic payload injection (`{{variable}}` syntax).
+- **Multi-Format Payloads:** Deep native support for `form-data`, `x-www-form-urlencoded`, and raw data payloads with base64 file encapsulation.
+- **Interactive Inspector:** Built-in recursive JSON node viewer for deep response packet analysis, complete with syntax highlighting and raw/preview rendering modes.
+- **Sandbox Engine:** Integrated JavaScript runtime to execute pre-request and post-response automated scripts asynchronously within the browser boundary.
+- **Containerized Architecture:** Zero-setup, isolated execution stack encapsulated via Docker Compose.
 
-## Proje Yapısı
+---
 
+## Technical Stack
+
+| Layer | Technology |
+| --- | --- |
+| **Backend API** | Flask (Python), SQLAlchemy, psycopg2 |
+| **Frontend UI** | React (Vite), Axios, React Router |
+| **Datastore** | PostgreSQL 15 |
+| **Authentication** | JWT (JSON Web Tokens) |
+| **Deployment** | Docker & Docker Compose, NGINX |
+
+---
+
+## Quickstart (Recommended)
+
+The entire application stack (Frontend, Backend, and Database) is orchestrated via a single Docker manifest.
+
+### Requirements
+
+- Docker Engine
+- Docker Compose
+
+### Boot Sequence
+
+Clone the repository and start the cluster:
+
+```bash
+git clone https://github.com/halilibrahim04/api-collection-manager.git
+cd api-collection-manager
+
+docker-compose up -d --build
 ```
-api-collection-manager/
-├── backend/          # Flask API
-│   ├── app/
-│   │   ├── models/   # Veritabanı modelleri
-│   │   ├── routes/   # API endpoint'leri
-│   │   ├── services/ # İş mantığı (parser, runner)
-│   │   └── utils/    # Yardımcı fonksiyonlar
-│   ├── run.py        # Uygulama başlatma
-│   └── requirements.txt
-├── frontend/         # React (Vite) arayüzü
-└── samples/          # Örnek collection dosyaları
+
+The system will automatically coordinate the boot stages:
+
+1. Provisions the PostgreSQL datastore.
+2. Initializes the Python Flask backend and automatically executes the DDL scheme migrations.
+3. Compiles the React UI and wraps it over an NGINX proxy.
+
+You can now access the application at **[http://localhost](http://localhost)**.
+
+---
+
+## Manual Installation (Local Development)
+
+If you prefer to run the components independently on bare metal:
+
+### 1. Database
+
+By default, the backend automatically provisions a zero-config **SQLite** database (`instance/app.db`).
+*Optional:* To connect to a local PostgreSQL instance, define the connection string in `backend/.env`:
+
+```env
+DATABASE_URL=postgresql://user:pass@localhost:5432/api_manager
 ```
 
-## Kurulum
-
-### Backend
+### 2. Backend (Flask)
 
 ```bash
 cd backend
 python -m venv venv
-venv\Scripts\activate        # Windows
-# source venv/bin/activate   # macOS/Linux
+source venv/bin/activate    # or `venv\Scripts\activate` on Windows
 pip install -r requirements.txt
-```
 
-### Veritabanı Oluşturma
-
-```bash
-flask db init
-flask db migrate -m "Initial migration"
 flask db upgrade
-```
-
-### Çalıştırma
-
-```bash
 python run.py
 ```
 
-Backend varsayılan olarak `http://localhost:5000` adresinde çalışır.
+*Listens by default on `http://localhost:5000`*
 
-### Frontend
+### 3. Frontend (React)
 
 ```bash
 cd frontend
@@ -63,17 +90,22 @@ npm install
 npm run dev
 ```
 
-Frontend varsayılan olarak `http://localhost:5173` adresinde çalışır.
+*Listens by default on `http://localhost:5173`*
 
-## API Endpoint'leri
+---
 
-| Method | Rota | Açıklama |
-|---|---|---|
-| `POST` | `/api/auth/register` | Kullanıcı kaydı |
-| `POST` | `/api/auth/login` | Kullanıcı girişi |
-| `GET` | `/api/collections` | Koleksiyon listesi |
-| `POST` | `/api/collections/import` | Koleksiyon import |
-| `DELETE` | `/api/collections/<id>` | Koleksiyon silme |
-| `GET` | `/api/collections/<id>/endpoints` | Endpoint listesi |
-| `PUT` | `/api/endpoints/<id>` | Endpoint güncelleme |
-| `POST` | `/api/endpoints/<id>/run` | Endpoint çalıştırma |
+## Architecture Endpoints
+
+| Method | Route | Description |
+| --- | --- | --- |
+| `POST` | `/api/auth/register` | Identity provisioning |
+| `POST` | `/api/auth/login` | Session token generation |
+| `GET` | `/api/collections` | Fetch root collection trees |
+| `POST` | `/api/collections/import` | Ingest external collection files |
+| `GET` | `/api/environments` | Fetch environment variable configurations |
+| `PUT` | `/api/endpoints/<id>` | Update endpoint properties |
+| `POST` | `/api/proxy` | Execute arbitrary network requests |
+
+---
+
+*Academic Build Version v1.0.0*
