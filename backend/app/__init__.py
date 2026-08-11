@@ -2,6 +2,7 @@
 API Collection Manager - Flask Application Factory
 """
 from flask import Flask
+from flask_cors import CORS
 from .config import Config
 from .extensions import db, jwt, migrate
 
@@ -15,6 +16,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     jwt.init_app(app)
     migrate.init_app(app, db)
+    CORS(app)
 
     # Blueprint'leri kaydet
     from .routes.auth import auth_bp

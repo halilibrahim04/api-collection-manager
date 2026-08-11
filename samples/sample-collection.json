@@ -103,6 +103,28 @@
           }
         },
         {
+          "name": "Patch Post",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Patched Title Only\"\n}"
+            },
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1",
+              "protocol": "https",
+              "host": ["jsonplaceholder", "typicode", "com"],
+              "path": ["posts", "1"]
+            }
+          }
+        },
+        {
           "name": "Delete Post",
           "request": {
             "method": "DELETE",

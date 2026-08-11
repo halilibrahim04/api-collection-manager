@@ -1,0 +1,55 @@
+{
+  "version": "1",
+  "name": "Sample Bruno Collection",
+  "type": "collection",
+  "collection": {
+    "name": "Bruno Test APIs"
+  },
+  "requests": [
+    {
+      "name": "Get User Profile",
+      "type": "http",
+      "request": {
+        "url": "https://jsonplaceholder.typicode.com/users/1",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Accept",
+            "value": "application/json",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "none"
+        },
+        "auth": {
+          "mode": "none"
+        }
+      }
+    },
+    {
+      "name": "Create Post (Bruno)",
+      "type": "http",
+      "request": {
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "enabled": true
+          }
+        ],
+        "params": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n  \"title\": \"Bruno Example\",\n  \"body\": \"This is created from Bruno format\",\n  \"userId\": 1\n}"
+        },
+        "auth": {
+          "mode": "none"
+        }
+      }
+    }
+  ]
+}

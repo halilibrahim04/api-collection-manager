@@ -18,6 +18,7 @@ class Endpoint(db.Model):
     query_params = db.Column(db.JSON, default=dict)
     body = db.Column(db.JSON, default=dict)
     auth = db.Column(db.JSON, default=dict)
+    scripts = db.Column(db.JSON, default=dict)
 
     def to_dict(self):
         """Endpoint bilgilerini sözlük olarak döndür."""
@@ -32,6 +33,7 @@ class Endpoint(db.Model):
             "query_params": self.query_params,
             "body": self.body,
             "auth": self.auth,
+            "scripts": self.scripts,
         }
 
     def __repr__(self):

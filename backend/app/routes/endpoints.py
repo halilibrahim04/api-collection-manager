@@ -37,7 +37,7 @@ def update_endpoint(endpoint_id):
     data = request.get_json()
 
     # Güncellenebilir alanlar
-    updatable_fields = ["name", "method", "base_url", "path", "headers", "query_params", "body", "auth"]
+    updatable_fields = ["name", "method", "base_url", "path", "headers", "query_params", "body", "auth", "scripts"]
     for field in updatable_fields:
         if field in data:
             setattr(endpoint, field, data[field])

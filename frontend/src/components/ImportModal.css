@@ -1,0 +1,200 @@
+/* ===== Import Modal ===== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  width: 480px;
+  max-width: 90%;
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  animation: scaleIn 0.25s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.modal-header h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+}
+
+.modal-close:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.drop-zone {
+  border: 2px dashed var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-align: center;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.drop-zone.has-file {
+  border-style: solid;
+  border-color: var(--primary-border);
+  background: var(--primary-light);
+  padding: 20px;
+}
+
+.drop-icon {
+  color: var(--text-tertiary);
+}
+
+.drop-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.drop-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.drop-formats {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  font-family: var(--font-mono);
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  color: var(--primary);
+}
+
+.file-name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.file-size {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.file-remove {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+}
+
+.file-remove:hover {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-secondary);
+}
+
+.btn-cancel {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-cancel:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.btn-import {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  background: var(--primary);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-import:hover {
+  background: var(--primary-hover);
+}
+
+.btn-import:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

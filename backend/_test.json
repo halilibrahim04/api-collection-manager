@@ -1,0 +1,1 @@
+{"info": {"name": "Test", "schema": "x"}, "item": [{"name": "EP1", "event": [{"listen": "prerequest", "script": {"exec": ["var x=1;"]}}], "request": {"method": "GET", "url": "https://httpbin.org/get"}}]}

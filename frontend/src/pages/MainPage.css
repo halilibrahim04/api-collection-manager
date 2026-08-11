@@ -1,0 +1,38 @@
+/* ===== Main Page Layout ===== */
+
+.main-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.request-section {
+  flex: 0 0 auto;
+  max-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.response-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-top: 2px solid var(--border-primary);
+}
+
+/* ── Resizer (visual separator) ── */
+.response-section::before {
+  content: '';
+  display: block;
+  height: 0;
+}
