@@ -59,7 +59,7 @@ export default function ResponsePanel({ response, loading, requestMethod }) {
     if (showTableTab) {
       setActiveTab('table')
     } else {
-      setActiveTab('body')
+      setActiveTab('pretty')
     }
   }, [response, showTableTab])
 
@@ -180,10 +180,22 @@ export default function ResponsePanel({ response, loading, requestMethod }) {
         </div>
         <div className="response-tabs">
           <button
-            className={`response-tab ${activeTab === 'body' ? 'active' : ''}`}
-            onClick={() => setActiveTab('body')}
+            className={`response-tab ${activeTab === 'pretty' ? 'active' : ''}`}
+            onClick={() => setActiveTab('pretty')}
           >
-            Body (JSON)
+            Pretty
+          </button>
+          <button
+            className={`response-tab ${activeTab === 'raw' ? 'active' : ''}`}
+            onClick={() => setActiveTab('raw')}
+          >
+            Raw
+          </button>
+          <button
+            className={`response-tab ${activeTab === 'preview' ? 'active' : ''}`}
+            onClick={() => setActiveTab('preview')}
+          >
+            Preview
           </button>
           {showTableTab && (
             <button
@@ -216,7 +228,7 @@ export default function ResponsePanel({ response, loading, requestMethod }) {
 
       {/* ── Tab Content ── */}
       <div className="response-content">
-        {activeTab === 'body' && (
+        {activeTab === 'pretty' && (
           <div className="response-body" style={{ padding: '16px', overflow: 'auto', backgroundColor: '#fff' }}>
             {parsedJsonData !== null ? (
               <JsonViewer data={parsedJsonData} />
@@ -225,6 +237,25 @@ export default function ResponsePanel({ response, loading, requestMethod }) {
                 <code>{bodyStr || 'No response body'}</code>
               </pre>
             )}
+          </div>
+        )}
+
+        {activeTab === 'raw' && (
+          <div className="response-body" style={{ padding: '16px', overflow: 'auto', backgroundColor: '#fff' }}>
+             <pre className="body-pre" style={{ margin: 0 }}>
+               <code>{typeof response.body === 'string' ? response.body : JSON.stringify(response.body, null, 2)}</code>
+             </pre>
+          </div>
+        )}
+
+        {activeTab === 'preview' && (
+          <div className="response-body" style={{ width: '100%', height: '100%', backgroundColor: '#fff', overflow: 'hidden' }}>
+             <iframe 
+                srcDoc={typeof response.body === 'string' ? response.body : 'Preview unavailable.'} 
+                style={{ width: '100%', height: '100%', border: 'none' }} 
+                sandbox="allow-same-origin"
+                title="preview"
+             />
           </div>
         )}
 
