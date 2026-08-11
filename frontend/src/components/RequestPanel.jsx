@@ -90,13 +90,29 @@ export default function RequestPanel({ endpoint, onSend, onSave, sending, saving
 
   const handleSend = () => {
     if (onSend) {
-      onSend({ method, url, params, headers, body, authToken })
+      onSend({ method, url, params, headers, bodyConfig, authConfig, scripts })
     }
   }
 
   const handleSave = () => {
     if (onSave) {
-      onSave({ method, url, params, headers, body, authToken })
+      onSave({
+        ...endpoint,
+        method,
+        base_url: url,
+        path: '', 
+        headers: headers.filter(h => h.key).reduce((acc, curr) => ({ ...acc, [curr.key]: curr.value }), {}),
+        query_params: params.filter(p => p.key).reduce((acc, curr) => ({ ...acc, [curr.key]: curr.value }), {}),
+        body: {
+          mode: bodyConfig.mode,
+          raw: bodyConfig.raw,
+          options: { raw: { language: bodyConfig.rawType } },
+          formdata: bodyConfig.formdata.filter(f => f.key),
+          urlencoded: bodyConfig.urlencoded.filter(f => f.key)
+        },
+        auth: authConfig,
+        scripts
+      })
     }
   }
 
