@@ -23,10 +23,12 @@ def create_app(config_class=Config):
     from .routes.collections import collections_bp
     from .routes.endpoints import endpoints_bp
     from .routes.proxy import proxy_bp
+    from .routes.environments import bp as environments_bp
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(collections_bp, url_prefix="/api/collections")
     app.register_blueprint(endpoints_bp, url_prefix="/api/endpoints")
     app.register_blueprint(proxy_bp, url_prefix="/api/proxy")
+    app.register_blueprint(environments_bp, url_prefix="/api/environments")
 
     return app

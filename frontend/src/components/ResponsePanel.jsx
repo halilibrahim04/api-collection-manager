@@ -241,9 +241,9 @@ export default function ResponsePanel({ response, loading, requestMethod }) {
         )}
 
         {activeTab === 'raw' && (
-          <div className="response-body" style={{ padding: '16px', overflow: 'auto', backgroundColor: '#fff' }}>
+          <div className="response-body" style={{ padding: '16px', overflow: 'auto', backgroundColor: '#fff', color: '#111827' }}>
              <pre className="body-pre" style={{ margin: 0 }}>
-               <code>{typeof response.body === 'string' ? response.body : JSON.stringify(response.body, null, 2)}</code>
+               <code style={{ color: 'inherit' }}>{typeof response.body === 'string' ? response.body : JSON.stringify(response.body, null, 2)}</code>
              </pre>
           </div>
         )}
@@ -251,7 +251,7 @@ export default function ResponsePanel({ response, loading, requestMethod }) {
         {activeTab === 'preview' && (
           <div className="response-body" style={{ width: '100%', height: '100%', backgroundColor: '#fff', overflow: 'hidden' }}>
              <iframe 
-                srcDoc={typeof response.body === 'string' ? response.body : 'Preview unavailable.'} 
+                srcDoc={typeof response.body === 'string' ? response.body : `<pre style="font-family: monospace; font-size: 13px; color: #111827; padding: 16px;">${JSON.stringify(response.body, null, 2)}</pre>`} 
                 style={{ width: '100%', height: '100%', border: 'none' }} 
                 sandbox="allow-same-origin"
                 title="preview"

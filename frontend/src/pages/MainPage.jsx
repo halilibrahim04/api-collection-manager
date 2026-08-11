@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import Sidebar from '../components/Sidebar'
 import RequestPanel from '../components/RequestPanel'
 import ResponsePanel from '../components/ResponsePanel'
+import EnvironmentManager from '../components/EnvironmentManager'
 import './MainPage.css'
 
 export default function MainPage() {
@@ -241,6 +242,9 @@ export default function MainPage() {
         selectedEndpointId={selectedEndpoint?.id}
       />
       <div className="main-content">
+        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '8px 16px', borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--bg-secondary)' }}>
+           <EnvironmentManager onEnvironmentChange={setEnvironment} />
+        </div>
         <div className="request-section">
           <RequestPanel
             endpoint={selectedEndpoint}

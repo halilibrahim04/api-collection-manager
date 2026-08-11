@@ -18,6 +18,7 @@ class User(db.Model):
 
     # İlişkiler
     collections = db.relationship("Collection", backref="owner", lazy=True, cascade="all, delete-orphan")
+    environments = db.relationship("Environment", backref="owner", lazy=True, cascade="all, delete-orphan")
 
     def set_password(self, password):
         """Şifreyi hash'leyerek kaydet."""

@@ -61,4 +61,12 @@ export const proxyAPI = {
   run: (data) => api.post('/proxy/run', data)
 }
 
+// ── Environments ──
+export const environmentsAPI = {
+  list: () => api.get('/environments'),
+  create: (data) => api.post('/environments', data),
+  update: (id, data) => api.put(`/environments/${id}`, data),
+  delete: (id) => api.delete(`/environments/${id}`),
+}
+
 export default api

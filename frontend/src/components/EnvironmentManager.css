@@ -1,0 +1,207 @@
+.env-manager-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.env-dropdown-container {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.env-select {
+  border: none;
+  background: transparent;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  outline: none;
+  cursor: pointer;
+}
+
+.env-edit-btn {
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--border-color);
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.env-edit-btn:hover {
+  background-color: var(--bg-hover);
+  color: var(--primary);
+}
+
+.env-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.env-modal {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  width: 800px;
+  max-width: 90vw;
+  height: 600px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.env-modal-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.env-modal-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: var(--danger);
+}
+
+.env-modal-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.env-list-panel {
+  width: 250px;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-secondary);
+}
+
+.env-list-actions {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.env-list-actions button {
+  width: 100%;
+  padding: 8px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.env-list-actions button:hover {
+  background-color: #e55a2b;
+}
+
+.env-item {
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.env-item:hover {
+  background-color: var(--bg-hover);
+}
+
+.env-item.active {
+  background-color: white;
+  color: var(--primary);
+  border-left: 3px solid var(--primary);
+}
+
+.env-edit-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.env-edit-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.env-name-input {
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.env-edit-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.env-save-btn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.env-save-btn:hover {
+  background-color: #e55a2b;
+}
+
+.env-delete-btn {
+  background-color: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.env-delete-btn:hover {
+  background-color: rgba(220, 38, 38, 0.1);
+}
+
+.env-vars-container {
+  flex: 1;
+  overflow: auto;
+  padding: 16px 24px;
+}
